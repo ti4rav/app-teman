@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TEMAN - STIKes Bhakti Husada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #F4FAFC;
+            --primary-blue: #4EA8DE;
+            --primary-dark: #377CA8;
+            --soft-blue: #D6EFFF;
+            --soft-pink: #FFE5EC;
+            --soft-mint: #D8F3DC;
+            --soft-yellow: #FFF3CD;
+            --text-dark: #2B2D42;
+            --text-muted: #5C677D;
+            --shadow-card: 0 4px 15px rgba(78, 168, 222, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background-color: #cfd8dc; 
+            color: var(--text-dark); 
+            line-height: 1.5; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px; 
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER & LOGO */
+        header { background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 3px solid var(--primary-blue); }
+        .top-header { background: linear-gradient(135deg, var(--soft-blue), var(--soft-pink)); padding: 15px; }
+        .kampus-logo { display: flex; flex-direction: row; align-items: center; gap: 12px; }
+        .kampus-img { width: 65px; height: 65px; object-fit: contain; background: white; padding: 4px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-shrink: 0; }
+        .kampus-text { display: flex; flex-direction: column; justify-content: center; }
+        .kampus-text strong { font-size: 0.8rem; font-weight: 700; color: var(--text-dark); line-height: 1.2;}
+        .teman-title { font-size: 1.15rem; font-weight: 800; color: var(--primary-blue); margin-top: 2px; text-shadow: 1px 1px 0px rgba(0,0,0,0.05);}
+        .teman-subtitle { font-size: 0.6rem; font-weight: 600; color: var(--text-dark); line-height: 1.1; margin-bottom: 2px;}
+        .teman-tagline { font-size: 0.6rem; font-style: italic; color: #d81159; font-weight: 600;}
+
+        /* NAVIGASI GESER */
+        .nav-container { padding: 10px 15px; }
+        .nav-links { display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 5px; }
+        .nav-links::-webkit-scrollbar { height: 4px; }
+        .nav-links::-webkit-scrollbar-thumb { background-color: #b0d4eb; border-radius: 10px; }
+        .nav-links button { background: #f0f4f8; border: none; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 8px 16px; border-radius: 50px; transition: all 0.2s ease; flex-shrink: 0;}
+        .nav-links button:hover, .nav-links button.active { background-color: var(--primary-blue); color: white; box-shadow: 0 4px 10px rgba(78, 168, 222, 0.3); }
+
+        /* KONTEN UTAMA */
+        main { padding: 20px 15px; flex-grow: 1; margin-bottom: 20px;}
+        .section { display: none; animation: slideUp 0.4s ease-out; }
+        .section.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1 { font-size: 1.8rem; line-height: 1.2; margin-bottom: 10px; color: var(--primary-dark); }
+        h2 { font-size: 1.5rem; text-align: center; margin-bottom: 20px; color: var(--primary-blue); }
+        h3 { font-size: 1.1rem; color: var(--primary-blue); margin-bottom: 10px; }
+
+        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: var(--shadow-card); margin-bottom: 20px; border: 2px solid white; }
+        .card-peach { background: linear-gradient(135deg, white, var(--soft-pink)); }
+        .card-mint { background: linear-gradient(135deg, white, var(--soft-mint)); }
+        .card-blue { background: linear-gradient(135deg, white, var(--soft-blue)); }
+        .card-yellow { background: linear-gradient(135deg, white, var(--soft-yellow)); }
+
+        .hero-img-box { position: relative; margin-top: 15px; margin-bottom: 30px;}
+        .hero-img-box img { width: 100%; border-radius: 20px; object-fit: cover; height: 180px; border: 3px solid white; box-shadow: var(--shadow-card); }
+        .hero-decoration { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: white; padding: 8px 15px; border-radius: 50px; box-shadow: var(--shadow-card); font-weight: 700; color: #d81159; font-size: 0.85rem; border: 2px solid var(--soft-pink); white-space: nowrap;}
+
+        .btn { display: inline-block; padding: 12px 20px; border: none; border-radius: 50px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; text-align: center; width: 100%; margin-bottom: 10px;}
+        .btn-primary { background: linear-gradient(135deg, var(--primary-blue), #0077b6); color: white; box-shadow: 0 4px 15px rgba(78, 168, 222, 0.4); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-secondary { background-color: white; color: var(--primary-blue); border: 2px solid var(--primary-blue); }
+        .btn-excel { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; font-size: 1rem; border-radius: 15px;}
+
+        .grid-image { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 2px solid white; }
+
+        /* FORMULIR */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--text-dark); font-size: 0.85rem; }
+        input, textarea { width: 100%; padding: 12px; border: 2px solid #eaeaea; border-radius: 12px; background-color: white; font-family: 'Poppins', sans-serif; font-size: 0.9rem; outline: none; transition: 0.3s; }
+        input:focus, textarea:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px var(--soft-blue); }
+
+        /* TABEL RIWAYAT DIUBAH KE KARTU (MOBILE-FRIENDLY) */
+        .history-card { background: white; border-radius: 16px; padding: 15px; margin-bottom: 15px; box-shadow: var(--shadow-card); border: 2px solid var(--soft-blue); }
+        .hist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 8px; margin-bottom: 8px; }
+        .hist-date { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+        .hist-nama { font-size: 0.9rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .hist-body { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .hist-tensi { font-size: 1.4rem; font-weight: 800; color: var(--primary-blue); }
+        .hist-kategori { padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-align: right;}
+        .hist-note { font-size: 0.8rem; color: var(--text-muted); font-style: italic; background: var(--bg-main); padding: 8px; border-radius: 8px;}
+
+        /* HASIL TENSI & EDUKASI */
+        .alert-box { padding: 15px; border-radius: 12px; margin-bottom: 15px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; border: 2px solid transparent;}
+        
+        .tabel-materi { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; margin-bottom: 10px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .tabel-materi th { background: var(--primary-blue); color: white; padding: 10px; font-weight: 600; }
+        .tabel-materi td { padding: 10px; border-bottom: 1px solid #eee; }
+
+        /* KELOMPOK LIST */
+        .kelompok-list { list-style: none; display: flex; flex-direction: column; gap: 10px;}
+        .kelompok-list li { background-color: white; padding: 10px 15px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary-blue); box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        .nim { background: var(--soft-blue); padding: 3px 8px; border-radius: 10px; color: var(--primary-dark); font-size: 0.75rem; font-weight: 700;}
+
+        footer { background: var(--primary-blue); padding: 15px; text-align: center; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: auto;}
+        footer p { color: white; font-weight: 500; font-size: 0.75rem; margin: 0; }
+        
+        p, ul { font-size: 0.9rem; color: var(--text-muted); }
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER MOBILE -->
+        <header>
+            <div class="top-header">
+                <div class="kampus-logo">
+                    <img src="https://stikesbhc.ac.id/wp-content/uploads/2024/03/STIKes-BHAKTI-HUSADA.png" alt="Logo STIKes" class="kampus-img" onerror="this.src='https://via.placeholder.com/90x90.png?text=LOGO';">
+                    <div class="kampus-text">
+                        <strong>STIKes Bhakti Husada Cikarang</strong>
+                        <div class="teman-title">TEMAN ❤️</div>
+                        <div class="teman-subtitle">(TEkanan darah terpantau, MANajemen hipertensi)</div>
+                        <div class="teman-tagline">"Temani langkahmu menuju hidup lebih sehat."</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-container">
+                <div class="nav-links">
+                    <button onclick="navTo('beranda')" id="btn-beranda" class="active">🏠 Beranda</button>
+                    <button onclick="navTo('materi')" id="btn-materi">📚 Penjelasan</button>
+                    <button onclick="navTo('pencegahan')" id="btn-pencegahan">🛡️ Pencegahan</button>
+                    <button onclick="navTo('cek-tensi')" id="btn-cek-tensi">🩺 Cek Tensi</button>
+                    <button onclick="navTo('riwayat')" id="btn-riwayat">📋 Riwayat</button>
+                    <button onclick="navTo('edukasi')" id="btn-edukasi">💡 Edukasi</button>
+                    <button onclick="navTo('tentang')" id="btn-tentang">ℹ️ Tentang</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- BERANDA -->
+            <section id="beranda" class="section active">
+                <div class="text-center mt-3">
+                    <h1>Pantau Tensi 🩺<br>Jaga Hati ❤️</h1>
+                    <p>Pahami hasil pengukuran tekanan darahmu dengan mudah melalui genggaman tangan.</p>
+                </div>
+                
+                <div class="hero-img-box">
+                    <img src="https://png.pngtree.com/png-vector/20220527/ourmid/pngtree-hypertensive-crisis-and-sphygmomanometer-vector-png-image_4760067.png" alt="Tensimeter">
+                    <div class="hero-decoration">❤️ Jaga Tekanan Darahmu!</div>
+                </div>
+
+                <button class="btn btn-primary" onclick="navTo('cek-tensi')">🩺 Cek Tensi Sekarang</button>
+                <button class="btn btn-secondary" onclick="navTo('materi')">📚 Pelajari Hipertensi</button>
+
+                <h3 class="text-center" style="margin-top: 30px;">🩺 Pintasan Cepat</h3>
+                
+                <div class="card card-peach text-center" onclick="navTo('materi')">
+                    <div style="font-size: 2.5rem; margin-bottom: 5px;">🫀</div>
+                    <h4 style="color: #d81159; margin-bottom: 5px;">Materi Hipertensi</h4>
+                    <p style="font-size: 0.8rem;">Pahami apa itu hipertensi, gejala, & klasifikasinya.</p>
+                </div>
+                
+                <div class="card card-mint text-center" onclick="navTo('pencegahan')">
+                    <div style="font-size: 2.5rem; margin-bottom: 5px;">🛡️</div>
+                    <h4 style="color: #2a9d8f; margin-bottom: 5px;">Pencegahan</h4>
+                    <p style="font-size: 0.8rem;">Langkah medis cegah & kelola darah tinggi.</p>
+                </div>
+            </section>
+
+            <!-- MATERI / PENJELASAN -->
+            <section id="materi" class="section">
+                <h2>Apa itu Hipertensi? 🩸</h2>
+                
+                <!-- A. PENGERTIAN -->
+                <div class="card card-blue">
+                    <div class="text-center" style="margin-bottom: 15px;">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/045/387/175/small_2x/medical-examination-and-cardiology-checkup-tonometer-measuring-high-blood-pressure-test-tubes-syringe-patient-medical-card-medications-syringe-heart-vector.jpg" style="max-width: 100%; border-radius: 12px; border: 2px solid #e0e0e0;">
+                    </div>
+                    <h3>A. Pengertian 🫀</h3>
+                    <p><strong>Hipertensi</strong> (darah tinggi) adalah kondisi di mana tekanan aliran darah terhadap dinding arteri terlalu tinggi secara terus-menerus.</p>
+                    <ul style="margin-left: 15px; margin-top: 10px; font-size: 0.85rem;">
+                        <li><strong>Sistolik ⬆️:</strong> Angka atas. Tekanan saat jantung berdetak/memompa darah.</li>
+                        <li><strong>Diastolik ⬇️:</strong> Angka bawah. Tekanan saat jantung beristirahat di antara detak.</li>
+                    </ul>
+                </div>
+
+                <!-- B. JENIS HIPERTENSI -->
+                <div class="card card-mint">
+                    <h3>B. Jenis-jenis Hipertensi 🧬</h3>
+                    <ul style="margin-left: 15px; font-size: 0.85rem; line-height: 1.6;">
+                        <li><strong>Hipertensi Primer (Esensial):</strong> Paling sering terjadi (90-95%). Berkembang perlahan selama bertahun-tahun tanpa penyebab medis yang spesifik, umumnya terkait gaya hidup dan usia.</li>
+                        <li style="margin-top: 8px;"><strong>Hipertensi Sekunder:</strong> (5-10%) Disebabkan oleh kondisi kesehatan lain yang mendasari, seperti penyakit ginjal, gangguan tiroid, <i>sleep apnea</i>, atau efek samping obat-obatan tertentu.</li>
+                    </ul>
+                </div>
+
+                <!-- C. NILAI NORMAL & KLASIFIKASI -->
+                <div class="card card-peach">
+                    <h3>C. Klasifikasi Tekanan Darah 📊</h3>
+                    <p style="font-size: 0.85rem; margin-bottom:10px;">Berdasarkan pedoman <i>American Heart Association</i> (AHA), pengkategorian tensi adalah:</p>
+                    
+                    <ul style="list-style: none; font-size: 0.85rem; line-height: 1.6; margin-left: 0;">
+                        <li style="margin-bottom: 5px;">🟢 <strong style="color: #2e7d32;">Normal:</strong> &lt; 120 <b>dan</b> &lt; 80</li>
+                        <li style="margin-bottom: 5px;">🟡 <strong style="color: #f57f17;">Meningkat:</strong> 120-129 <b>dan</b> &lt; 80</li>
+                        <li style="margin-bottom: 5px;">🟠 <strong style="color: #e65100;">Hipertensi Tkt 1:</strong> 130-139 <b>atau</b> 80-89</li>
+                        <li style="margin-bottom: 5px;">🔴 <strong style="color: #c62828;">Hipertensi Tkt 2:</strong> 140+ <b>atau</b> 90+</li>
+                        <li>🚨 <strong style="color: #b71c1c;">Krisis Hipertensi:</strong> &gt; 180 <b>dan/atau</b> &gt; 120</li>
+                    </ul>
+
+                    <h4 style="font-size: 0.95rem; color: var(--primary-dark); margin-top: 15px; margin-bottom: 8px;">Target Normal Berdasarkan Usia</h4>
+                    <table class="tabel-materi">
+                        <tr>
+                            <th>Kelompok Usia</th>
+                            <th>Target Tensi (mmHg)</th>
+                        </tr>
+                        <tr>
+                            <td>18 - 39 Tahun</td>
+                            <td>Kurang dari 120/80</td>
+                        </tr>
+                        <tr>
+                            <td>40 - 59 Tahun</td>
+                            <td>Dijaga &lt; 130/80</td>
+                        </tr>
+                        <tr>
+                            <td>Lansia (&ge; 60 Tahun)</td>
+                            <td>&lt; 140/90 (Toleransi &lt; 150/90)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- D. GEJALA -->
+                <div class="card card-yellow">
+                    <h3>D. Gejala yang Muncul 🤕</h3>
+                    <p style="font-size: 0.85rem; margin-bottom:10px;">Hipertensi sering disebut <strong>"The Silent Killer"</strong> (Pembunuh Senyap) karena <strong>mayoritas penderitanya tidak merasakan gejala apapun</strong> hingga kondisinya parah. Jika tekanan darah sangat tinggi, dapat muncul keluhan:</p>
+                    <ul style="margin-left: 15px; font-size: 0.85rem; line-height: 1.6;">
+                        <li>Sakit kepala berdenyut / tengkuk terasa berat.</li>
+                        <li>Pandangan mata kabur secara tiba-tiba.</li>
+                        <li>Jantung berdebar keras atau nyeri pada dada.</li>
+                        <li>Mudah lelah, sesak napas, atau mimisan.</li>
+                    </ul>
+                </div>
+
+                <!-- E. FAKTOR RISIKO -->
+                <div class="card card-blue">
+                    <h3>E. Faktor Risiko ⚠️</h3>
+                    <div style="background: white; padding: 15px; border-radius: 12px; margin-bottom: 10px;">
+                        <h4 style="color: #d32f2f; font-size: 0.9rem; margin-bottom: 5px;">🔒 Tidak Bisa Diubah</h4>
+                        <ul style="margin-left: 15px; font-size: 0.85rem;">
+                            <li>Riwayat keturunan / faktor genetik.</li>
+                            <li>Faktor usia (pembuluh darah kaku seiring umur).</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 12px;">
+                        <h4 style="color: #f57c00; font-size: 0.9rem; margin-bottom: 5px;">🔓 Bisa Dikontrol</h4>
+                        <ul style="margin-left: 15px; font-size: 0.85rem;">
+                            <li>Asupan makanan tinggi garam (natrium).</li>
+                            <li>Kebiasaan merokok & kurang olahraga.</li>
+                            <li>Obesitas, kolesterol tinggi, & stres berlebihan.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PENCEGAHAN -->
+            <section id="pencegahan" class="section">
+                <h2>Pencegahan Hipertensi</h2>
+                <div class="card card-mint">
+                    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=400" alt="Food" class="grid-image">
+                    <h3 style="color: #2a9d8f;">Primer (Belum Terkena)</h3>
+                    <ul style="margin-left: 15px; font-size: 0.85rem; line-height: 1.6;">
+                        <li>Pola makan sehat bergizi seimbang (Diet DASH).</li>
+                        <li>Batasi garam maks 1 sdt per hari.</li>
+                        <li>Olahraga teratur 30 menit/hari (min. 5x seminggu).</li>
+                        <li>Hindari paparan asap rokok dan alkohol.</li>
+                        <li>Kelola stres dan pastikan tidur yang cukup.</li>
+                    </ul>
+                </div>
+                <div class="card card-blue">
+                    <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=400" alt="Doctor" class="grid-image">
+                    <h3 style="color: var(--primary-blue);">Sekunder (Sudah Terdiagnosis)</h3>
+                    <ul style="margin-left: 15px; font-size: 0.85rem; line-height: 1.6;">
+                        <li>Rutin cek tensi ke faskes secara berkala.</li>
+                        <li>Patuh meminum obat dari dokter tanpa terlewat.</li>
+                        <li>Disiplin mempertahankan gaya hidup sehat tanpa henti.</li>
+                        <li>Periksa fungsi ginjal dan jantung secara rutin.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CEK TENSI -->
+            <section id="cek-tensi" class="section">
+                <h2>🩺 Cek Tensi Mandiri</h2>
+                
+                <div class="card card-yellow">
+                    <form id="form-tensi">
+                        <div class="form-group">
+                            <label>Nama Lengkap / Pasien 👤</label>
+                            <input type="text" id="input-nama" placeholder="Masukkan nama..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sistolik (Angka Atas) ⬆️</label>
+                            <input type="number" id="input-sys" placeholder="120" required min="50" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label>Diastolik (Angka Bawah) ⬇️</label>
+                            <input type="number" id="input-dia" placeholder="80" required min="30" max="200">
+                        </div>
+                        
+                        <div style="display:flex; gap:10px;">
+                            <div class="form-group" style="flex:1;">
+                                <label>Tanggal</label>
+                                <input type="date" id="input-tgl" required>
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label>Waktu</label>
+                                <input type="time" id="input-waktu" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Catatan (Opsional)</label>
+                            <textarea id="input-catatan" rows="2" placeholder="Cth: Setelah olahraga, agak pusing..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="padding: 15px; font-size: 1rem;">🔍 Analisis Hasil!</button>
+                    </form>
+                </div>
+
+                <!-- HASIL -->
+                <div id="hasil-container" class="card" style="display:none; background-color: var(--soft-blue); border: none; scroll-margin-top: 80px;">
+                    <h3 class="text-center">📊 Hasil Analisis</h3>
+                    
+                    <div class="text-center" style="background: white; padding: 15px; border-radius: 15px; border: 2px solid var(--primary-blue); margin: 15px 0;">
+                        <span style="font-size: 3rem; font-weight: 800; color: var(--primary-blue);" id="display-angka">120/80</span>
+                        <span style="font-size: 1rem; color: var(--text-muted); font-weight: bold;">mmHg</span>
+                    </div>
+
+                    <div id="alert-kategori" class="alert-box"></div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 15px;">
+                        <p style="font-size: 0.85rem; margin-bottom: 15px;"><span id="display-penjelasan"></span></p>
+                        
+                        <h4 style="color: #d81159; font-size: 1rem; border-top: 1px dashed #eee; padding-top: 10px; margin-bottom: 10px;">💡 Edukasi Khusus:</h4>
+                        <p id="display-pesan-awal" style="font-weight: 700; font-size: 0.9rem; color: #2B2D42; margin-bottom: 8px;"></p>
+                        <ul id="display-edukasi" style="margin-left: 15px; font-size: 0.85rem;"></ul>
+                    </div>
+                    
+                    <button onclick="simpanKeSpreadsheet()" id="btn-simpan-db" class="btn btn-primary mt-3" style="background: linear-gradient(135deg, #2a9d8f, #21867a);">💾 Simpan ke Riwayat Bersama</button>
+                    <div id="notif-simpan" class="text-center mt-3" style="display:none; color: #2a9d8f; font-weight:bold; font-size:0.9rem;">✅ Berhasil disimpan ke Spreadsheet pusat!</div>
+                </div>
+            </section>
+
+            <!-- RIWAYAT -->
+            <section id="riwayat" class="section">
+                <h2>📋 Riwayat Tensi Bersama</h2>
+                <p class="text-center" style="font-size: 0.85rem; margin-bottom: 15px;">Data di bawah ini tersimpan secara publik dan dapat dilihat oleh semua orang.</p>
+                
+                <div class="text-center" style="margin-bottom: 15px;">
+                    <button onclick="loadRiwayatDariSpreadsheet()" class="btn btn-secondary" style="width: auto; padding: 8px 16px; font-size: 0.8rem;">🔄 Muat Ulang Data</button>
+                </div>
+
+                <div id="list-riwayat">
+                    <!-- Data masuk kesini -->
+                </div>
+                <div id="pesan-kosong" class="text-center" style="padding: 30px; font-style: italic; color: #888;">Memuat data...</div>
+            </section>
+
+            <!-- EDUKASI -->
+            <section id="edukasi" class="section">
+                <h2>💡 Media Edukasi</h2>
+                <div class="card card-blue" style="border: none;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="font-size: 2rem;">🥗</div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 5px;">Pola Makan (DASH)</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.5;">Perbanyak sayur, buah, gandum utuh. Batasi garam maksimal 1 sdt per hari untuk jaga tensi.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="font-size: 2rem;">🏃</div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 5px;">Aktivitas Fisik</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.5;">Olahraga ringan/sedang (jalan cepat, bersepeda) minimal 30 menit setiap hari.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <div style="font-size: 2rem;">🧘</div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 5px;">Kelola Stres & Tidur</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.5;">Hindari stres berlebih dan pastikan tidur nyenyak 7-8 jam per malam.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div style="font-size: 2rem;">🩺</div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 5px;">Cara Ukur Tensi</h3>
+                            <ul style="font-size: 0.85rem; margin-left: 15px; line-height: 1.5;">
+                                <li>Istirahat 5 menit sebelum ukur.</li>
+                                <li>Duduk tegak, lengan di atas meja sejajar jantung.</li>
+                                <li>Jangan bicara selama pengukuran.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TENTANG -->
+            <section id="tentang" class="section">
+                <h2>ℹ️ Tentang TEMAN</h2>
+                <div class="card card-peach text-center">
+                    <h3 style="font-size: 1.4rem;">TEMAN ❤️</h3>
+                    <p style="font-size: 0.8rem; font-weight: bold;">(TEkanan darah terpantau, MANajemen hipertensi)</p>
+                    <p style="font-size: 0.85rem; margin-top: 10px;">Aplikasi berbasis web untuk Mata Kuliah Sistem Informasi Keperawatan (S1) - STIKes Bhakti Husada Cikarang.</p>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 12px; margin-top: 15px; text-align: left; border-left: 5px solid #d81159;">
+                        <p style="color: #d81159; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">⚠️ Disclaimer Medis</p>
+                        <p style="font-size: 0.8rem;">Aplikasi ini alat edukasi mandiri, bukan pengganti diagnosis/konsultasi dokter. Jangan hentikan obat tanpa arahan medis!</p>
+                    </div>
+                </div>
+
+                <h3 class="text-center mt-3" style="font-size: 1rem;">🎓 Disusun Oleh Kelompok:</h3>
+                <ul class="kelompok-list">
+                    <li><span>Hanif Said Allutvi</span> <span class="nim">250401012</span></li>
+                    <li><span>Elisah</span> <span class="nim">250401022</span></li>
+                    <li><span>Salsa Ayunida Wibowo</span> <span class="nim">250401023</span></li>
+                    <li><span>Fahnny Nur Anggraini</span> <span class="nim">250401029</span></li>
+                    <li><span>Abdul Rahman</span> <span class="nim">250401034</span></li>
+                    <li><span>Abdul Aziz</span> <span class="nim">250401044</span></li>
+                    <li><span>Tiara</span> <span class="nim">250401052</span></li>
+                    <li><span>Nabila Putri Syahroni</span> <span class="nim">250401053</span></li>
+                    <li><span>Diva Pricilia Chandra</span> <span class="nim">250401055</span></li>
+                    <li><span>Lulu Maknun</span> <span class="nim">250401057</span></li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>❤️ © 2026 STIKes Bhakti Husada Cikarang<br>Sistem Informasi Keperawatan 🩺</p>
+        </footer>
+    </div>
+
+    <script>
+        // ⬇️ MASUKKAN URL WEB APP GOOGLE APPS SCRIPT KAMU DI TANDA KUTIP DI BAWAH INI:
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxULZaDp1Czcd6FrRbFCCCQbgsjccSqkKBR7iZSNxAmahlZV-ZZrYKc3cdclivm5b2mrw/exec";
+
+        function navTo(sectionId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + sectionId).classList.add('active');
+
+            const btn = document.getElementById('btn-' + sectionId);
+            const nav = document.querySelector('.nav-links');
+            nav.scrollTo({ left: btn.offsetLeft - 20, behavior: 'smooth' });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(sectionId === 'riwayat') loadRiwayatDariSpreadsheet();
+        }
+
+        window.onload = () => {
+            const now = new Date();
+            const offset = now.getTimezoneOffset() * 60000;
+            const localISOTime = (new Date(Date.now() - offset)).toISOString().slice(0, -1);
+            
+            document.getElementById('input-tgl').value = localISOTime.split('T')[0];
+            document.getElementById('input-waktu').value = localISOTime.split('T')[1].substring(0,5);
+        };
+
+        let currentHasil = null;
+
+        document.getElementById('form-tensi').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const nama = document.getElementById('input-nama').value;
+            const sys = parseInt(document.getElementById('input-sys').value);
+            const dia = parseInt(document.getElementById('input-dia').value);
+            
+            let sysWeight = 0, diaWeight = 0;
+            
+            if (sys > 180) sysWeight = 5;
+            else if (sys >= 140) sysWeight = 4;
+            else if (sys >= 130) sysWeight = 3;
+            else if (sys >= 120) sysWeight = 2;
+            else sysWeight = 1;
+
+            if (dia > 120) diaWeight = 5;
+            else if (dia >= 90) diaWeight = 4;
+            else if (dia >= 80) diaWeight = 3;
+            else diaWeight = 1; 
+
+            const finalWeight = Math.max(sysWeight, diaWeight);
+            let kategoriText = "", warnaAlert = "", iconAlert = "", penjelasan = "", pesanAwal = "", listEdukasi = [];
+
+            switch(finalWeight) {
+                case 1:
+                    kategoriText = "Normal"; warnaAlert = "#D8F3DC"; iconAlert = "💚";
+                    penjelasan = "Tekanan darah Anda berada dalam batas normal dan sehat.";
+                    pesanAwal = "Bagus, jaga jantungmu! 🫀";
+                    listEdukasi = ["Pertahankan pola makan sehat bergizi.", "Batasi garam berlebih.", "Olahraga rutin 30 menit/hari."];
+                    break;
+                case 2:
+                    kategoriText = "Meningkat"; warnaAlert = "#FFF3CD"; iconAlert = "💛";
+                    penjelasan = "Tekanan sistolik sedikit naik. Belum termasuk hipertensi namun butuh kewaspadaan.";
+                    pesanAwal = "Mulai perhatikan tensimu! 🩺";
+                    listEdukasi = ["Kurangi asupan garam/natrium.", "Jaga berat badan tetap ideal.", "Tingkatkan intensitas olahraga ringan."];
+                    break;
+                case 3:
+                    kategoriText = "Hipertensi Tkt 1"; warnaAlert = "#FFE0B2"; iconAlert = "🧡";
+                    penjelasan = "Hasil ini masuk klasifikasi hipertensi tingkat 1 berdasarkan pedoman medis.";
+                    pesanAwal = "Waktunya perbaiki gaya hidup! 🌱";
+                    listEdukasi = ["Kurangi garam maks 1 sdt/hari secara ketat.", "Perbanyak sayuran dan buah (Diet DASH).", "Konsultasikan ke faskes untuk tindak lanjut."];
+                    break;
+                case 4:
+                    kategoriText = "Hipertensi Tkt 2"; warnaAlert = "#FFCDD2"; iconAlert = "❤️";
+                    penjelasan = "Peningkatan tekanan darah signifikan, berisiko komplikasi jika diabaikan.";
+                    pesanAwal = "Perhatikan dengan serius! 🚨";
+                    listEdukasi = ["Segera konsultasi hasil ini dengan dokter.", "Jika ada resep, patuhilah jadwal minum obat.", "Terapkan diet rendah garam dengan sangat disiplin."];
+                    break;
+                case 5:
+                    kategoriText = "Krisis Hipertensi"; warnaAlert = "#EF9A9A"; iconAlert = "🚑";
+                    penjelasan = "Tingkat tensi sangat membahayakan dan berisiko merusak organ vital tubuh.";
+                    pesanAwal = "TINDAKAN DARURAT MEDIS! 🆘";
+                    listEdukasi = ["Istirahat 5 menit, lalu ukur ulang.", "Jika masih >180/120, segera hubungi Dokter atau UGD.", "Jangan melakukan aktivitas berat."];
+                    break;
+            }
+
+            currentHasil = {
+                nama: nama,
+                sys: sys, 
+                dia: dia,
+                tgl: document.getElementById('input-tgl').value,
+                waktu: document.getElementById('input-waktu').value,
+                kategori: kategoriText,
+                catatan: document.getElementById('input-catatan').value,
+                bgKategori: warnaAlert
+            };
+
+            document.getElementById('display-angka').innerText = `${sys}/${dia}`;
+            
+            const alertBox = document.getElementById('alert-kategori');
+            alertBox.style.backgroundColor = warnaAlert;
+            alertBox.style.color = (finalWeight >= 4) ? "#b71c1c" : "var(--text-dark)";
+            alertBox.innerHTML = `<span style="font-size:1.5rem;">${iconAlert}</span> <strong>Kategori:</strong> ${kategoriText}`;
+
+            document.getElementById('display-penjelasan').innerText = penjelasan;
+            document.getElementById('display-pesan-awal').innerText = pesanAwal;
+            
+            const ulEdukasi = document.getElementById('display-edukasi');
+            ulEdukasi.innerHTML = "";
+            listEdukasi.forEach(item => {
+                let li = document.createElement('li');
+                li.innerText = item;
+                ulEdukasi.appendChild(li);
+            });
+
+            document.getElementById('notif-simpan').style.display = 'none';
+            document.getElementById('hasil-container').style.display = 'block';
+            document.getElementById('hasil-container').scrollIntoView({behavior: "smooth", block: "start"});
+        });
+
+        function simpanKeSpreadsheet() {
+            if(!currentHasil) return;
+            const btnSimpan = document.getElementById('btn-simpan-db');
+            btnSimpan.innerText = "⏳ Menyimpan ke Spreadsheet...";
+            btnSimpan.disabled = true;
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(currentHasil)
+            })
+            .then(() => {
+                document.getElementById('notif-simpan').style.display = 'block';
+                btnSimpan.innerText = "💾 Simpan ke Riwayat Bersama";
+                btnSimpan.disabled = false;
+            })
+            .catch(error => {
+                alert("Gagal menyimpan: " + error);
+                btnSimpan.innerText = "💾 Simpan ke Riwayat Bersama";
+                btnSimpan.disabled = false;
+            });
+        }
+
+        function loadRiwayatDariSpreadsheet() {
+            const container = document.getElementById('list-riwayat');
+            const pesanKosong = document.getElementById('pesan-kosong');
+            pesanKosong.style.display = "block";
+            pesanKosong.innerText = "Memuat data dari Spreadsheet...";
+            container.innerHTML = "";
+
+            if(WEB_APP_URL === "MASUKKAN_URL_WEB_APP_DISINI") {
+                pesanKosong.innerText = "⚠️ URL Web App Google Apps Script belum dimasukkan di dalam kode JavaScript!";
+                return;
+            }
+
+            fetch(WEB_APP_URL)
+            .then(response => response.json())
+            .then(data => {
+                if(!data || data.length === 0) {
+                    pesanKosong.style.display = "block";
+                    pesanKosong.innerText = "Belum ada riwayat tersimpan.";
+                } else {
+                    pesanKosong.style.display = "none";
+                    data.reverse().forEach(item => {
+                        let dateObj = new Date(item.tgl);
+                        let formatTgl = isNaN(dateObj) ? item.tgl : dateObj.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+
+                        let warnaKategori = "#FFF3CD";
+                        if(item.kategori.includes("Normal")) warnaKategori = "#D8F3DC";
+                        else if(item.kategori.includes("Tkt 1")) warnaKategori = "#FFE0B2";
+                        else if(item.kategori.includes("Tkt 2")) warnaKategori = "#FFCDD2";
+                        else if(item.kategori.includes("Krisis")) warnaKategori = "#EF9A9A";
+
+                        let card = document.createElement('div');
+                        card.className = 'history-card';
+                        card.innerHTML = `
+                            <div class="hist-header">
+                                <span class="hist-date">📅 ${formatTgl} • ⏰ ${item.waktu || '-'}</span>
+                            </div>
+                            <div class="hist-nama">👤 ${item.nama || 'Tanpa Nama'}</div>
+                            <div class="hist-body">
+                                <div class="hist-tensi">${item.sys}/${item.dia} <span style="font-size:0.8rem; color:#888;">mmHg</span></div>
+                                <div class="hist-kategori" style="background-color: ${warnaKategori}">${item.kategori}</div>
+                            </div>
+                            <div class="hist-note">${item.catatan ? '📝 ' + item.catatan : '<i>Tidak ada catatan</i>'}</div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            })
+            .catch(error => {
+                pesanKosong.style.display = "block";
+                pesanKosong.innerText = "Gagal memuat data. Pastikan akses Web App sudah diatur ke 'Anyone'.";
+            });
+        }
+    </script>
+</body>
+</html>
